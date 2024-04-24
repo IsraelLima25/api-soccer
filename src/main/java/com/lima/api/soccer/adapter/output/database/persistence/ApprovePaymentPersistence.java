@@ -1,0 +1,30 @@
+package com.lima.api.soccer.adapter.output.database.persistence;
+
+import com.lima.api.soccer.adapter.output.database.repository.payment.PaymentRepository;
+import com.lima.api.soccer.adapter.output.database.model.PaymentModel;
+import com.lima.api.soccer.adapter.output.database.model.PlayerModel;
+import com.lima.api.soccer.application.entity.Payment;
+import com.lima.api.soccer.application.port.payment.output.ApprovePaymentOutputPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ApprovePaymentPersistence implements ApprovePaymentOutputPort {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApprovePaymentPersistence.class);
+
+    private final PaymentRepository paymentRepository;
+
+    public ApprovePaymentPersistence(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
+    }
+
+    @Override
+    public void updateApprovePayment(Payment payment) {
+        LOGGER.info(String.format("Start update payment code=s%", payment.getCode()));
+        PlayerModel playerModel = new PlayerModel(payment.getPlayer().getId(), payment.getPlayer().getCode(), payment.getPlayer().getName(), payment.getPlayer().getDob(), payment.getPlayer().getRg());
+        PaymentModel paymentModel = new PaymentModel(payment.getId(), payment.getCode(), payment.getDatePayment(), playerModel, payment.getTypePaymentIndicator(), payment.getStatusPaymentIndicator());
+        paymentRepository.save(paymentModel);
+    }
+}

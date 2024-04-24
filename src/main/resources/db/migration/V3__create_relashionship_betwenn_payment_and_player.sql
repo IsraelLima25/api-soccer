@@ -1,0 +1,1 @@
+ALTER TABLE tbl_payment ADD CONSTRAINT fk_player FOREIGN KEY (id_player) REFERENCES tbl_player (id);

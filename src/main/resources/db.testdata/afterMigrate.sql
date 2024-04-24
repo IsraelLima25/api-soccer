@@ -1,0 +1,1 @@
+INSERT INTO tbl_player (code, name, data_nascimento, rg) VALUES (uuid(), "Israel", "1991-03-31", "54785469328");
